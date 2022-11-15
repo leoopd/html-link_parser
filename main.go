@@ -1,9 +1,15 @@
 package main
 
 import (
-	u "/htmllinkparser"
+	"log"
+
+	u "github.com/leoopd/html-link_parser/util"
 )
 
 func main() {
-	u.HtmlParser("../html/ex1.html")
+	htmlFile, err := u.HtmlReader("./html/ex1.html")
+	if err != nil {
+		log.Fatal(err)
+	}
+	u.HtmlParser(htmlFile)
 }
