@@ -1,7 +1,6 @@
 package htmllinkparser
 
 import (
-	"fmt"
 	"io/ioutil"
 	"strings"
 
@@ -21,25 +20,28 @@ func HtmlReader(path string) (string, error) {
 	return string(text), nil
 }
 
-func TagParser(n *html.Node) {
-	if n.Type == html.ElementNode && n.Data == "a" {
-
-		fmt.Printf("Pre: %#+v\n", n.Attr[0].Val)
-		fmt.Printf("Pre: %#+v\n", n.FirstChild.Data)
-
-		for j := n.FirstChild.NextSibling; j != nil; j = j.NextSibling {
-			fmt.Printf("Post: %#+v\n", j.FirstChild.Data)
-		}
-	}
-	for c := n.FirstChild; c != nil; c = c.NextSibling {
-		TagParser(c)
-	}
-}
-
 func HtmlParser(text string) (*html.Node, error) {
 
 	doc, err := html.Parse(strings.NewReader(text))
 	check(err)
 
 	return doc, nil
+}
+
+func TagParser(n *html.Node) (string, string) {
+	var link string
+	var text string
+	if n.Type == html.ElementNode && n.Data == "a" {
+
+		link = n.Attr[0].Val
+		text = n.FirstChild.Data
+
+		for j := n.FirstChild.NextSibling; j != nil; j = j.NextSibling {
+			text += j.FirstChild.Data
+		}
+	}
+	for c := n.FirstChild; c != nil; c = c.NextSibling {
+		TagParser(c)
+	}
+	return link, text
 }

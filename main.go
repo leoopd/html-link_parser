@@ -15,5 +15,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	u.TagParser(parsedHtmlFile)
+	link, text := u.TagParser(parsedHtmlFile)
+	u.Insert(link, text)
 }
