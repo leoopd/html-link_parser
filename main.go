@@ -11,5 +11,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	u.LinkParser(htmlFile)
+	parsedHtmlFile, err := u.HtmlParser(htmlFile)
+	if err != nil {
+		log.Fatal(err)
+	}
+	u.TagParser(parsedHtmlFile)
 }
