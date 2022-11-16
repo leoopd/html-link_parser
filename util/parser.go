@@ -28,7 +28,7 @@ func HtmlParser(text string) (*html.Node, error) {
 	return doc, nil
 }
 
-func TagParser(n *html.Node) (string, string) {
+func TagParser(n *html.Node, l *LinkedList) {
 	var link string
 	var text string
 	if n.Type == html.ElementNode && n.Data == "a" {
@@ -37,11 +37,11 @@ func TagParser(n *html.Node) (string, string) {
 		text = n.FirstChild.Data
 
 		for j := n.FirstChild.NextSibling; j != nil; j = j.NextSibling {
-			text += j.FirstChild.Data
+				text += " " + j.FirstChild.Data
 		}
+		l.Insert(link, text)
 	}
 	for c := n.FirstChild; c != nil; c = c.NextSibling {
-		TagParser(c)
+		TagParser(c, l)
 	}
-	return link, text
 }

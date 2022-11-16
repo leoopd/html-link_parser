@@ -15,6 +15,7 @@ func (l *LinkedList) Insert(link, text string) {
 	h := Href{}
 	h.Link = link
 	h.Text = text
+
 	if l.Len == 0 {
 		l.Head = &h
 		l.Len++

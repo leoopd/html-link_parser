@@ -1,12 +1,15 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	u "github.com/leoopd/html-link_parser/util"
 )
 
 func main() {
+	var list u.LinkedList
+
 	htmlFile, err := u.HtmlReader("./html/ex1.html")
 	if err != nil {
 		log.Fatal(err)
@@ -15,6 +18,5 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	link, text := u.TagParser(parsedHtmlFile)
-	u.Insert(link, text)
+	u.TagParser(parsedHtmlFile, &list)
 }
