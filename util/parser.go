@@ -21,19 +21,22 @@ func HtmlReader(path string) (string, error) {
 	return string(text), nil
 }
 
-func HtmlParser(text string) {
+func LinkParser(text string) {
 
 	doc, err := html.Parse(strings.NewReader(text))
 	check(err)
 
 	var f func(*html.Node)
 	f = func(n *html.Node) {
+
 		if n.Type == html.ElementNode && n.Data == "a" {
 
-			fmt.Printf("%#+v\n", n.Attr[0].Val)
+			fmt.Printf("Pre: %#+v\n", n.Attr[0].Val)
+			fmt.Printf("Pre: %#+v\n", n.FirstChild.Data)
 
-			fmt.Printf("%#+v\n", n.NextSibling)
-			fmt.Printf("%#+v\n", n.NextSibling.NextSibling)
+			for j := n.FirstChild.NextSibling; j != nil; j = j.NextSibling {
+				fmt.Printf("Post: %#+v\n", j.FirstChild.Data)
+			}
 
 		}
 		for c := n.FirstChild; c != nil; c = c.NextSibling {
@@ -41,5 +44,4 @@ func HtmlParser(text string) {
 		}
 	}
 	f(doc)
-
 }
