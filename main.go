@@ -19,5 +19,6 @@ func main() {
 		log.Fatal(err)
 	}
 	u.TagParser(parsedHtmlFile, &list)
-	fmt.Println(list)
+	fmt.Println(list.Head)
+
 }
