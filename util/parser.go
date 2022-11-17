@@ -37,7 +37,7 @@ func TagParser(n *html.Node, l *LinkedList) {
 		text = n.FirstChild.Data
 
 		for j := n.FirstChild.NextSibling; j != nil; j = j.NextSibling {
-				text += " " + j.FirstChild.Data
+			text += " " + j.Data
 		}
 		l.Insert(link, text)
 	}
