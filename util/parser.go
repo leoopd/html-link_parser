@@ -33,15 +33,17 @@ func TagParser(n *html.Node, l *LinkedList) {
 	var text string
 	if n.Type == html.ElementNode && n.Data == "a" {
 
-		link = n.Attr[0].Val
-		text = n.FirstChild.Data
+		if n.Attr[0].Key == "href" {
+			link = n.Attr[0].Val
+			text = n.FirstChild.Data
 
-		for j := n.FirstChild.NextSibling; j != nil; j = j.NextSibling {
-			if j.Type == html.TextNode {
-				text += " " + j.Data
+			for j := n.FirstChild.NextSibling; j != nil; j = j.NextSibling {
+				if j.Type == html.TextNode {
+					text += " " + j.Data
+				}
 			}
+			l.Insert(link, text)
 		}
-		l.Insert(link, text)
 	}
 	for c := n.FirstChild; c != nil; c = c.NextSibling {
 		TagParser(c, l)
