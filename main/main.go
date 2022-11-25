@@ -10,7 +10,7 @@ import (
 func main() {
 	var list u.LinkedList
 
-	htmlFile, err := u.HtmlReader("../html/ex2.html")
+	htmlFile, err := u.HtmlReader("../html/ex5.html")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -19,5 +19,8 @@ func main() {
 		log.Fatal(err)
 	}
 	u.TagParser(parsedHtmlFile, &list)
-	fmt.Println(list.Head)
+
+	for i := list.Head; i != nil; i = i.Next {
+		fmt.Println(i.Link)
+	}
 }
